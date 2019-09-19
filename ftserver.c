@@ -49,14 +49,11 @@ int serverSetup(char* portNum){
     struct addrinfo hints, *res;
     int addrStatus, sockfd, bindStatus, listenStatus;
 
-    // !! don't forget your error checking for these calls !!
-
-    // first, load up address structs with getaddrinfo():
 
     memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_UNSPEC;  // use IPv4 or IPv6, whichever
+    hints.ai_family = AF_UNSPEC; 
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
+    hints.ai_flags = AI_PASSIVE;   
 
     addrStatus = getaddrinfo(NULL, portNum, &hints, &res);
     if (addrStatus != 0) {
@@ -64,7 +61,6 @@ int serverSetup(char* portNum){
         exit(1);
     }
 
-    // make a socket, bind it, and listen on it:
 
     sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
     if (sockfd==-1){ 
@@ -106,7 +102,6 @@ int clientSetup(char* servName, char* portNum){
     hints.ai_family = AF_UNSPEC;     
     hints.ai_socktype = SOCK_STREAM; 
 
-    // get ready to connect
     status = getaddrinfo(servName, portNum, &hints, &servinfo);
     if (status != 0) {
         fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
